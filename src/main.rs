@@ -2,7 +2,8 @@ use reqwest;
 
 fn main() {
     let client = reqwest::Client::new();
-    let res = client.get("https://www.rust-lang.org")
+    let res = client.get("http://localhost:8888/index.php")
+        .query(&[("lang", "rust")])
         .send();
 
     let mut res = match res {
@@ -12,6 +13,11 @@ fn main() {
             std::process::exit(1);
         }
     };
+
+    if ! res.status().is_success() {
+        std::process::exit(1);
+    }
+
     let body = match res.text() {
         Ok(v) => v,
         Err(e) => {
