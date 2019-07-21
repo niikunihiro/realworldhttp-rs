@@ -1,6 +1,10 @@
 use reqwest;
 
 fn main() {
+    get();
+}
+
+fn get () {
     let client = reqwest::Client::new();
     let res = client.get("http://localhost:8888/index.php")
         .query(&[("lang", "rust")])
