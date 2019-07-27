@@ -4,7 +4,28 @@ use reqwest::multipart;
 fn main() {
 //    get();
 //    post();
-    post_file();
+//    post_file();
+    head();
+}
+
+fn head () {
+    let client = reqwest::Client::new();
+    let res = client.head("http://localhost:8888/index.php")
+        .send();
+
+    let mut res = match res {
+        Ok(v) => v,
+        Err(e) => {
+            eprintln!("Error {:?}", e);
+            std::process::exit(1);
+        }
+    };
+
+    if ! res.status().is_success() {
+        std::process::exit(1);
+    }
+
+    println!("{:?}", res.headers());
 }
 
 fn get () {
